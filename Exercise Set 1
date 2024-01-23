@@ -63,6 +63,7 @@ ggplot(data=penguins,
 #geom() function. The second is the same code but with the information within the functions
 
 #Exercise 1.4.3
+
 #1
 ggplot(penguins, aes(y = fct_infreq(species))) + geom_bar()
 #Basically, we got species on the y-axis (vertical) and put them in order where we see that Adelie species are the highest in numbers. 
@@ -84,7 +85,7 @@ ggplot(diamonds, aes(x = carat)) + geom_histogram(binwidth = 0.1)
 ggplot(diamonds, aes(x = carat)) + geom_histogram(binwidth = 0.05)
 #From our perspective, the most reasonable ones are the bandwidths of 0.25 and 0.1.
 
-1.6.1
+#Exercise 1.6.1
 #1
 #The second one since it has the ggsave with the code, as it saves the plot. 
 
