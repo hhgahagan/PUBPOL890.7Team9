@@ -83,3 +83,10 @@ ggplot(diamonds, aes(x = carat)) + geom_histogram(binwidth = 0.25)
 ggplot(diamonds, aes(x = carat)) + geom_histogram(binwidth = 0.1)
 ggplot(diamonds, aes(x = carat)) + geom_histogram(binwidth = 0.05)
 #From our perspective, the most reasonable ones are the bandwidths of 0.25 and 0.1.
+
+1.6.1
+#1
+#The second one since it has the ggsave with the code
+
+#2
+#Change png to pdg in ggsave. 
