@@ -86,7 +86,7 @@ ggplot(diamonds, aes(x = carat)) + geom_histogram(binwidth = 0.05)
 
 1.6.1
 #1
-#The second one since it has the ggsave with the code
+#The second one since it has the ggsave with the code, as it saves the plot. 
 
 #2
 #Change png to pdg in ggsave. 
