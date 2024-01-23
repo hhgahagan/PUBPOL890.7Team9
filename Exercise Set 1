@@ -30,3 +30,34 @@ ggplot(data=penguins) + geom_point()
 #This code would give an error message because the variables on the x-axis and y-axis have not yet been specified. To fix this, the code needs to list the variables that are being related to one another (code example below)
 
 ggplot(data=penguins, aes(x=bill_length_mm, y=bill_depth_mm)) + geom_point()
+
+#6
+#This argument removes the missing values. The default of this is false and
+#doesn't remove the missing.
+
+ggplot(data=penguins,
+       aes(x=species,y=bill_length_mm))+
+  geom_point(na.rm=TRUE)
+
+#7
+ggplot(data=penguins,
+       aes(x=species,y=bill_length_mm))+
+  geom_point(na.rm=TRUE) +
+  labs(caption = "Data come from the palmerpenguins package")
+
+#8
+#It should be mapped to the geom_level because the global level gives a warning.
+ggplot(data=penguins,
+       mapping = aes(x = flipper_length_mm,
+                     y = body_mass_g)) + 
+  geom_point(aes(colour = bill_depth_mm),
+             na.rm = TRUE) +
+  geom_smooth(na.rm = TRUE)
+
+#9
+#The Chart will show flipper length on x-axis and y-axis. The dots will be
+#the color of the islands.
+
+#10
+#These graphs will be the same because the aes() function can work with the 
+#geom() function. The second is the same code but with the information within the functions
