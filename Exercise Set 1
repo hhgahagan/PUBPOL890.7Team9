@@ -62,7 +62,7 @@ ggplot(data=penguins,
 #These graphs will be the same because the aes() function can work with the 
 #geom() function. The second is the same code but with the information within the functions
 
-1.4.3
+#Exercise 1.4.3
 #1
 ggplot(penguins, aes(y = fct_infreq(species))) + geom_bar()
 #Basically, we got species on the y-axis (vertical) and put them in order where we see that Adelie species are the highest in numbers. 
