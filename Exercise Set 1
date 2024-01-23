@@ -1,1 +1,32 @@
-Question 1
+Question 1#R Exercise Set 1
+
+#Exercise 1.2.5
+
+#1
+View(penguins)
+
+#There are 344 rows and 8 columns in the penguins dataset
+
+#2
+?penguins
+
+#The variable bill_depth_mm describes each penguin's bill depth in millimeters
+
+#3
+ggplot(penguins, aes(x=bill_length_mm, y=bill_depth_mm)) + geom_point() + labs(x="Bill Length (mm)", y="Bill Depth (mm)")
+
+#According to the scatterplot, there seems to be a positive but weak relationship between bill length and bill depth
+
+#4
+ggplot(penguins, aes(x=bill_depth_mm, y=species)) + geom_point() + labs(x="Bill Depth (mm)", y="Species")
+
+#A scatterplot of species vs. bill depth puts all the data points of one species on the same line, a better geom would be a boxplot (code below)
+
+ggplot(penguins, aes(x=species, y=bill_depth_mm)) + geom_boxplot() + labs(x="Species", y="Bill Depth (mm)")
+
+#5
+ggplot(data=penguins) + geom_point()
+
+#This code would give an error message because the variables on the x-axis and y-axis have not yet been specified. To fix this, the code needs to list the variables that are being related to one another (code example below)
+
+ggplot(data=penguins, aes(x=bill_length_mm, y=bill_depth_mm)) + geom_point()
