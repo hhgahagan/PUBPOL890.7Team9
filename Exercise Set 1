@@ -65,7 +65,7 @@ ggplot(data=penguins,
 1.4.3
 #1
 ggplot(penguins, aes(y = fct_infreq(species))) + geom_bar()
-Basically, we got species on the y-axis (vertical) and put them in order where we see that Adelie species are the highest in numbers. 
+#Basically, we got species on the y-axis (vertical) and put them in order where we see that Adelie species are the highest in numbers. 
 
 #2
 ggplot(penguins, aes(x = species)) + geom_bar(color = "red")
@@ -74,7 +74,7 @@ ggplot(penguins, aes(x = species)) + geom_bar(fill = "red")
 #The first code with color gives red color to the borders (outlines) of the bar and the second one with “fill” fills the columns with red color. While we want to draw attention to the variable’s distribution and highlight the bars’ general color, we use fill and if we want to draw attention to the bar boundaries and make distinctions between individual bars we use color. From our perspective, the most used one is the filled bar option which allows us to visually compare the heights of the bars without distraction from borders.
 
 #3
-It is used to specify the number of bins.
+#It is used to specify the number of bins.
 
 #4
 ggplot(diamonds, aes(x = carat)) + geom_histogram(binwidth = 10)
