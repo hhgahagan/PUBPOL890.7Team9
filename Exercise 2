@@ -18,4 +18,4 @@ View (mpg)
 ggplot(data = mpg, aes(x=displ, y=hwy)) + geom_point() + geom_smooth(method = "lm")
 
 #3
-#We can use help and search for shortcuts, since Option + Shift + K / Alt + Shift + K are the command for shortcut.
+#We can use help and then keyboard shortcut help, since Option + Shift + K / Alt + Shift + K is the command for shortcuts.
