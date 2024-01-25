@@ -85,6 +85,58 @@ ggplot(diamonds, aes(x = carat)) + geom_histogram(binwidth = 0.1)
 ggplot(diamonds, aes(x = carat)) + geom_histogram(binwidth = 0.05)
 #From our perspective, the most reasonable ones are the bandwidths of 0.25 and 0.1.
 
+#Exersise 1.5.5
+
+#1.5.5.1
+?mpg
+There are 6 categorical variables:
+
+1. manufacturer
+manufacturer name
+2. model
+model name
+3.trans
+ type of transmission 
+4.drv
+the type of drive train;
+where  f = front-wheel drive, r = rear wheel drive, 4 = 4wde
+5. fl
+fuel type
+6. Class
+"type" of car
+
+##1.5.5.2
+
+> ggplot(
++     data = mpg,
++     mapping = aes(x = hwy, y = displ)
++ ) +
++     geom_point()
+
+ggplot(data = mpg, mapping = aes(x = hwy, y = displ)) + geom_point(aes(color = year))
+- There seems to be non-linear relationship when adding 'year' as the third numerical variable to the scatterplot of hwy vs. displ
+
+ggplot(data = mpg, mapping = aes(x = hwy, y = displ)) + geom_point(aes(size = cyl))
+- When adding 'cyl' - the number of cylinder of a car - there is an apparent linear relationship, where as the number of cylinder increases-
+  the engine displacement increases and the highway per mileage decreases
+
+> ggplot(data = mpg, mapping = aes(x = hwy, y = displ)) + geom_point(aes(color = year)) + geom_point(aes(size = cyl))
+- When mapping 'year' as color and  'cyl' as size, there appears to be a relationship that cars with more number of cylinders and 
+less highway per mileage are made in the earlier years of 2000
+
+> ggplot(data = mpg, mapping = aes(x = hwy, y = displ)) + geom_point(aes(color = year)) + geom_point(aes(size = cyl)) + geom_path(aes(shape = manufacturer))
+- When modeling 'manufacturer', a catergorical variable, with shape, it displayed "Ignoring unknown aesthetics: shape" because "The shape palette can deal 
+with a maximum of 6 discrete values because more than 6 becomes difficult to discriminate; you have 15. Consider specifying shapes manually if you must have them.
+- However,  we tried adding a numerical variable 'cty' -city mileage- to the shape aesthetic and found out that a continuous variable cannot be mapped to the shape aesthetic
+
+> ggplot(data = mpg, mapping = aes(x = hwy, y = displ)) + geom_point(aes(color = year)) + geom_point(aes(size = cyl)) + geom_path(aes(shape = class))
+- When adding a categorical varible, 'class', to model for shape, it still generates an 'Ignoring unknown aesthetics: shape' because "The shape palette can deal 
+with a maximum of 6 discrete values because more than 6 becomes difficult to discriminate; you have 7. Consider specifying shapes manually if you must have them." 
+
+#1.5.5.3
+
+
+
 #Exercise 1.6.1
 #1
 #The second one since it has the ggsave with the code, as it saves the plot. 
