@@ -2,16 +2,16 @@
 
 #Exercises 2.5 (1-4)
 
-#1. This is wrong because in the second line, my_variable is spelled with a 1 instead of an i (my_var1ble)
+#1
+This is wrong because in the second line, my_variable is spelled with a 1 instead of an i (my_var1ble)
 
 #2
-
 library(todyverse)
 
 #Corrected
 library(tidyverse)
 
-ggplot(dTA = mpg) + geom_point(maping = aes(x = displ y = hwy)) + geom_smooth(method = "lm)
+#ggplot(dTA = mpg) + geom_point(maping = aes(x = displ y = hwy)) + geom_smooth(method = "lm)
 
 #Corrected
 View (mpg)
@@ -19,3 +19,10 @@ ggplot(data = mpg, aes(x=displ, y=hwy)) + geom_point() + geom_smooth(method = "l
 
 #3
 #We can use help and then keyboard shortcut help, since Option + Shift + K / Alt + Shift + K is the command for shortcuts.
+
+#4
+my_bar_plot <- ggplot(mpg, aes(x = class)) + geom_bar()
+my_scatter_plot <- ggplot(mpg, aes(x = cty, y = hwy)) + geom_point()
+ggsave(filename = "mpg-plot.png", plot = my_bar_plot)
+
+#The graph that saves is the bar plot because the code specifically indicates to save the bar plot.
