@@ -134,8 +134,31 @@ with a maximum of 6 discrete values because more than 6 becomes difficult to dis
 with a maximum of 6 discrete values because more than 6 becomes difficult to discriminate; you have 7. Consider specifying shapes manually if you must have them." 
 
 #1.5.5.3
+> ggplot(mpg, aes(x = hwy, y = displ, linewidth = cty))
+- Nothing happens when mapping a third variable to linewidth in the scatterplot of hwy vs. displ
 
+#1.5.5.4
+> ggplot(mpg, aes(x = hwy, y = displ, linewidth = cty)) +
++     geom_line(aes(size = cty)) 
+- when adding size aesthetic to it, a graph is generated, which shows engine displacement decreasing as city mile per hour increases
 
+#1.5.5.5
+> ggplot(penguins, aes(x = bill_depth_mm, y = bill_length_mm, color = species)) + geom_point()
+- The  "Adelie" species have relatively more depth and less length while the "Gentoo" species have relatively more length and less depth. 
+On the other hand, the relationship between length and depth is more linear for the "Chinstrap" species 
+
+ ggplot(penguins, aes(x = bill_depth_mm, y = bill_length_mm, color = species)) + geom_point() + facet_wrap(~species)
+- Faceting by species reveals the linear relationship between lenght and depth in all the three species while also supporting
+the previous observation that "Adelie" species have more depth and that "Gentoo" species have more length 
+
+#1.5.5.6
+Answer: it yielded two separate legends because it should have been specifically mapped within the geom_point function.
+Here is how to correct the code that will generate combined legends 
+> ggplot(
++     data = penguins,
++     mapping = aes(x = bill_length_mm, y = bill_depth_mm)
++ ) +
++     geom_point(mapping = aes(color = species, shape = species))
 
 #Exercise 1.6.1
 #1
