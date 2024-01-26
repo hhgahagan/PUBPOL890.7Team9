@@ -1,1 +1,39 @@
 
+#3.2.5
+
+library(nycflights13)
+library(tidyverse)
+view(flights)
+#1
+  filter(flights,arr_delay>=120)
+  filter(flights, month>=7,month<=9)
+  filter(flights,dest=="IAH"|dest=="HOU")
+  filter(flights,carrier=="UA"|carrier=="AA"|carrier=="DL")
+  filter(flights,arr_delay>120 & dep_delay<=0)
+  filter(flights,dep_delay>=60,dep_delay - arr_delay > 30)      
+#2
+flights |>
+  arrange(desc(dep_delay))
+#The most delayed flight was HA 51, JFK to HNL.
+arrange(flights, dep_delay)
+#The least delayed flight was B697, from JFK to Den.
+#
+#3
+head(arrange(flights, air_time))
+#with math
+head(arrange(flights, desc(distance/air_time)))
+#4
+flights|>
+  distinct(year,day,month)
+#
+#Yes, there were are 365 distinct rows meaning there were flights everyday.
+#5
+flights |>
+  arrange(desc(distance)) |>
+  relocate(distance)
+
+flights |>
+  arrange(distance) |>
+  relocate(distance)
+#4983 miles for longest and 80 miles for shortest
+#6 It does not matter what order because it is filtering based on the conditions
