@@ -4,6 +4,7 @@
 library(nycflights13)
 library(tidyverse)
 view(flights)
+
 #1
   filter(flights,arr_delay>=120)
   filter(flights, month>=7,month<=9)
@@ -37,3 +38,52 @@ flights |>
   relocate(distance)
 #4983 miles for longest and 80 miles for shortest
 #6 It does not matter what order because it is filtering based on the conditions
+
+
+#3.3.5
+
+#1
+flights |> select(dep_time, sched_dep_time, dep_delay)
+
+#These columns are related in that sched_dep_time + dep_delay = dep_time
+
+#2
+flights |> select(dep_time, dep_delay, arr_time, arr_delay)
+flights |> select(dep_time:arr_delay & !sched_dep_time & !sched_arr_time)
+flights |> select(dep_time:arr_delay & !starts_with("sched"))
+flights |> select(starts_with("dep") | starts_with("arr"))
+
+#3
+flights |> select(month)
+flights |> select(month, month, month)
+
+#If you specify the name of the same variable multiple times, it brings up the specified variable only once.
+
+#4
+?any_of
+
+#The any_of function selects variables contained in a character vector.
+
+variables <- c("year", "month", "day", "dep_delay", "arr_delay")
+flights |> select(any_of(variables))
+
+#The any_of function can help with this vector because it selects all variables contained in it, which can help shorthand codes involving these variables
+
+#5
+flights |> select(contains("TIME"))
+
+#Considering the fact that R can be case sensitive, the result of this code was surprising. 
+#The select helpers will select any variable containing the specified characters no matter their case.
+
+flights |> select(contains("time"))
+
+#6
+flights |> rename(air_time_min=air_time) |> relocate(air_time_min)
+
+#7
+flights |> select(tailnum) |> arrange(arr_delay)
+
+#The following code does not work because the select function selects only the tailnum column. That is why R says that the arr_delay object was not found.
+#R can't arrange the values in tailnum by their arrival delay unless the arr_delay column is also chosen, which is shown in the corrected code below.
+
+flights |> select(tailnum, arr_delay) |> arrange(arr_delay)
