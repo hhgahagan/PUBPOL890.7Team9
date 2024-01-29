@@ -87,3 +87,100 @@ flights |> select(tailnum) |> arrange(arr_delay)
 #R can't arrange the values in tailnum by their arrival delay unless the arr_delay column is also chosen, which is shown in the corrected code below.
 
 flights |> select(tailnum, arr_delay) |> arrange(arr_delay)
+
+#3.5.7
+#1 
+flights |> 
+  group_by(carrier, dest) |> 
+  summarise(avg_dep_delay = mean(dep_delay, na.rm = TRUE)) |>
+  arrange(desc(avg_dep_delay))
+
+worst_delays <- flights |>
+  group_by(carrier, dest) |>
+  summarize(
+    total_flights = n(),
+    avg_delay = mean(dep_delay, na.rm = TRUE)
+  ) |>
+  arrange(desc(avg_delay))
+
+#United is the most delayed one
+
+#2
+flights |>
+  group_by(dest) |>
+  arrange(dest, desc(dep_delay)) |>
+  slice_head(n = 5) |>
+  relocate(dest, dep_delay)
+#albuquerque is the one
+
+#3
+flights |>
+  group_by(hour) |>
+  summarise(avg_dep_delay = mean(dep_delay, na.rm = TRUE)) |>
+  ggplot(aes(x = hour, y = avg_dep_delay)) + geom_smooth()
+
+#based on the graph we observe that the pick of delays is from 5:00 p.m. -7:00 p.m. and after 8:00 p.m. it decreases.
+
+#4
+flights |> 
+  slice_min(dep_delay, n = -5) |>
+  relocate(dep_delay)
+
+flights |>
+  slice_min(dep_delay, n = - 5) |>
+  relocate(dep_delay)
+
+flights |> 
+  slice_max(dep_delay, n = -5) |>
+  relocate(dep_delay)
+
+flights |> 
+  slice_max(dep_delay, n = 5) |>
+  relocate(dep_delay)
+#no tangible change happens. it arranges the data frame in increasing or decreasing order, but it does not slice the data frame.
+
+#5
+#group_by() is dividing the data set into meaningful groups based on one or more variables. 
+#summarize() is used to calculate a single summary statistic, counting the number of observations within each group.
+#while putting sort argument to True, it groups the categories in descending order.
+
+#6
+df <- tibble(
+  x = 1:5,
+  y = c("a", "b", "a", "a", "b"),
+  z = c("K", "K", "L", "L", "K")
+)
+#the first function defines the data frame "df"
+df |>
+  group_by(y)
+#(a)this command defines "df" by "y"
+
+df |>
+  arrange(y)
+#(b)it arranges "df" in ascending order in terms of "y"
+
+df |>
+  group_by(y) |>
+  summarize(mean_x = mean(x))
+#(c)groups "df" by "y", and then calculates the mean of x for each group. 
+
+df |>
+  group_by(y, z) |>
+  summarize(mean_x = mean(x))
+#(d) it groups the "df" by "x" and "y" and calculates the average of "x" for each group. The output is grouped by "y".
+
+df |>
+  group_by(y, z) |>
+  summarize(mean_x = mean(x), .groups = "drop")
+#(e) it groups the "df" by "x" and "y", then it calculates the average of "x". The difference from the 1 code is that in this code, the first part of the code retains the grouping information and the second part drops. 
+
+df |>
+  group_by(y, z) |>
+  summarize(mean_x = mean(x))
+
+df |>
+  group_by(y, z) |>
+  mutate(mean_x = mean(x))
+#(f) The difference is that the second one with mutate the function adds a new column (mean_x) to every row in the original data set, showing the average of "x" for the group to which that row belongs.
+
+
