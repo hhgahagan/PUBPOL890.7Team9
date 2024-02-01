@@ -1,1 +1,53 @@
 
+
+
+#7.2.4 (1-6)
+library(tidyverse)
+#1
+#For reading a |, we would use read_delim() with delim = "1"
+
+#2
+#These two functions have everything else in commmon.
+
+#3
+#col_positions is important argument because it defines the beginning and end of columns.
+#col_types is also important since it defines what type of entry the column is.
+
+#4
+#We would need to specify the quote argument
+read_csv("x,y\n1,'a,b'", quote = "\'")
+
+#5
+read_csv("a,b\n1,2,3\n4,5,6")
+#This one has two column headers but three values in each row, R forces them to be merged
+read_csv("a,b,c\n1,2\n1,2,3,4")
+#There are three coulmn headers and the first row is missing a value, this makes the last column 
+#have N/A. Also the secord row merges the last two values.
+read_csv("a,b\n\"1")
+#No rows are in there.
+read_csv("a,b\n1,2\na,b")
+#The columns have a number and letter, so each column type is turned into a character
+read_csv("a;b\n1;3")
+#; is the deliminter but it isn't defined so it is read as one column of data
+
+#6
+annoying <- tibble(
+  `1` = 1:10,
+  `2` = `1` * 2 + rnorm(length(`1`))
+)
+#Extracting the variable called 1.
+annoying |>
+  select(`1`)
+#Plotting a scatterplot of 1 vs. 2.
+ggplot(annoying, aes(x = `2`, y = `1`)) +
+  geom_point()
+#Creating a new column called 3, which is 2 divided by 1.
+annoying |>
+  mutate(`3` = `2` / `1`)
+#Renaming the columns to one, two, and three.
+annoying |>
+  mutate(`3` = `2` / `1`) |>
+  rename(
+    "one" = `1`,
+    "two" = `2`,
+    "three" = `3`)
