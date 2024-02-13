@@ -72,7 +72,7 @@ survey <- survey |>
 
 survey
 
-#2
+#2 (Don't know functions to fill in NAs)
 roster <- read_excel(
   "C:/Users/Leslie Morales/Box/PUB POL Spring 2024/PUB POL 890 - R/roster.xlsx",
   col_types = c("numeric", "text", "numeric")
