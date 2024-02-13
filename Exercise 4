@@ -51,3 +51,94 @@ annoying |>
     "one" = `1`,
     "two" = `2`,
     "three" = `3`)
+
+#Exercise 20.2.9
+
+#1
+survey <- read_excel(
+  "C:/Users/Leslie Morales/Box/PUB POL Spring 2024/PUB POL 890 - R/survey.xlsx",
+  col_type = c("text", "text"),
+  na="N/A"
+)
+
+survey
+
+survey <- survey |>
+  mutate(
+    n_pets = if_else(n_pets=="two", "2", n_pets),
+    n_pets = parse_number(n_pets),
+    survey_id = factor(survey_id)
+    )
+
+survey
+
+#2
+roster <- read_excel(
+  "C:/Users/Leslie Morales/Box/PUB POL Spring 2024/PUB POL 890 - R/roster.xlsx",
+  col_types = c("numeric", "text", "numeric")
+)
+
+roster                  
+
+#3
+#A
+sales <- read_excel(
+  "C:/Users/Leslie Morales/Box/PUB POL Spring 2024/PUB POL 890 - R/sales.xlsx",
+  col_types = c("text", "text"),
+  range = "A5:B13",
+  col_names = c("id", "n")
+)
+
+sales
+
+#B 
+sales_tidy <- read_excel(
+  "C:/Users/Leslie Morales/Box/PUB POL Spring 2024/PUB POL 890 - R/tidysales.xlsx",
+  col_types = c("text", "numeric", "numeric"),
+  range = "A5:C11",
+  col_names = c("brand", "id","n")
+)
+
+sales_tidy
+
+#4
+install.packages("openxlsx")
+library(openxlsx)
+
+bake_sale <- tibble(
+  item = factor(c("brownie", "cupcake", "cookie")),
+  quantity = c(10, 5, 8)
+)
+
+write_xlsx(bake_sale, path = "C:/Users/Leslie Morales/Box/PUB POL Spring 2024/PUB POL 890 - R/bake-sale.xlsx")
+
+#5
+install.packages("janitor")
+library(janitor)
+
+students_snake <- read_xlsx(
+  "C:/Users/Leslie Morales/Box/PUB POL Spring 2024/PUB POL 890 - R/students.xlsx",
+  na = c("", "N/A"),
+  col_types = c("numeric", "text", "text", "text", "text")
+)
+
+students_snake
+
+students_snake <- students_snake |> 
+  janitor::clean_names()
+
+students_snake
+
+students_snake <- students_snake |>
+  mutate(
+    age = if_else(age=="five", "5", age),
+    age = parse_number(age)
+  )
+
+students_snake
+
+#6
+read_xls("C:/Users/Leslie Morales/Box/PUB POL Spring 2024/PUB POL 890 - R/survey.xlsx")
+
+#If you try to open an .xlsx file with the read_xls function,
+#you will get an error message saying R cannot open the file.
