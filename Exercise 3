@@ -183,4 +183,28 @@ df |>
   mutate(mean_x = mean(x))
 #(f) The difference is that the second one with mutate the function adds a new column (mean_x) to every row in the original data set, showing the average of "x" for the group to which that row belongs.
 
+#4.6.1
+flights |> 
+  filter(dest == "IAH") |>
+  group_by(year, month, day)|>
+  summarize(
+    n = n(),
+    delay = mean(arr_delay, na.rm = TRUE)
+    ) |>
+  filter(n > 10)
+
+flights |> 
+  filter(carrier == "UA",
+         dest %in% c("IAH", "HOU"), 
+         sched_dep_time > 0900,
+         sched_arr_time < 2000) |>
+  group_by(flight) |>
+  summarize (
+    delay  =mean(arr_delay,na.rm=TRUE),
+    cancelled = sum(is.na(arr_delay)), n = n()
+    ) |> 
+  filter(n>10)
+
+
+
 
