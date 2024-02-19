@@ -1,4 +1,48 @@
 
+#4.6.1
+flights |> 
+  filter(dest == "IAH") |>
+  group_by(year, month, day)|>
+  summarize(
+    n = n(),
+    delay = mean(arr_delay, na.rm = TRUE)
+    ) |>
+  filter(n > 10)
+
+flights |> 
+  filter(carrier == "UA",
+         dest %in% c("IAH", "HOU"), 
+         sched_dep_time > 0900,
+         sched_arr_time < 2000) |>
+  group_by(flight) |>
+  summarize (
+    delay  =mean(arr_delay,na.rm=TRUE),
+    cancelled = sum(is.na(arr_delay)), n = n()
+    ) |> 
+  filter(n>10)
+
+#5.2.1 
+#Each table represents observations in countries. 
+#In table 1, country indicates the name of the country, year- presents the year, when the data have been collected, cases- the number of people with disease that year, population is the number of people in each country that year.  
+#In table 2, country presents the countries included in the table, year is the year, when the observations have been done, type is the separate case and population, the count is the number of cases and population in a particular year. 
+#In table 3, coountry and year are the same as in the above mentioned 2 tables, rate is the number of cases with disease and total population (case divided by population).
+
+
+#5.2.2
+
+table2 |>
+  pivot_wider(names_from = type,
+              values_from = count) |>
+  mutate(rate = cases / population * 10000)
+
+table3 <- table3 %>%
+  separate(rate, into = c("cases", "population"), sep = "/") %>%
+  mutate(cases = as.numeric(cases),
+         population = as.numeric(population),
+         rate = (cases/population) * 100000)
+print("table 3:")
+  print(table3)
+
 
 
 #7.2.4 (1-6)
