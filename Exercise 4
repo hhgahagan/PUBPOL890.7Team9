@@ -186,3 +186,47 @@ read_xls("C:/Users/Leslie Morales/Box/PUB POL Spring 2024/PUB POL 890 - R/survey
 
 #If you try to open an .xlsx file with the read_xls function,
 #you will get an error message saying R cannot open the file.
+
+
+
+#Exercise 21.5.10
+
+#1
+distinct() is translated to DISTINCT in SQL
+head() is translated to LIMIT clause of the SQL query
+
+#2
+#2.1 SELECT * 
+     FROM flights
+     WHERE dep_delay < arr_delay
+
+# The above SQL query is translated as follows:
+SELECT *: This selects all columns from the flights table.
+FROM flights: This specifies the table named flights from which to retrieve the data.
+WHERE dep_delay < arr_delay: This condition filters the rows where the departure delay (dep_delay) is less than the arrival delay (arr_delay).
+
+# The equivalent dplyr code is:
+flights |> filter(dep_delay < arr_delay)
+
+#2.2 SELECT *, distance / (air_time / 60) AS speed
+     FROM flights
+
+# The above SQL query is translated as:
+SELECT *: This selects all columns from the flights table.
+distance / (air_time / 60) AS speed: This part calculates the speed of each flight. 
+It divides the distance traveled (distance) by the air time (air_time), which is in minutes. 
+The result is given a new variable with the 'aliasing' clause as the speed in miles per hour.
+
+# The equivalent dplyr code will be:
+flights |> mutate(speed = distance / (air_time / 60))
+
+
+#Exercise 22.5.3
+
+#1
+
+
+#2
+
+
+#3
