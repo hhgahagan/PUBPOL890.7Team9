@@ -43,3 +43,42 @@ ggplot(mpg, aes(x = displ, y = hwy)) +
 ggplot(mpg, aes(x = displ, y = hwy)) +
   geom_point(size = 4, color = "white") +
   geom_point(aes(colour = drv))
+
+
+
+9.5.1
+
+diamonds |>
+  group_by(cut) |>
+  summarize(
+    lower = min(depth),
+    upper = max(depth),
+    midpoint = median(depth)
+  ) |
+  ggplot(aes(x = cut, y = midpoint)) +
+  geom_pointrange(aes(ymin = lower, ymax = upper))
+
+9.5.2
+#geom_bar() calculates the heights from the data and then plots them in: representing the count of observations in each category.  geom_col() creates a bar plot where heights of the bars are representing a value associated with each category.
+
+9.5.3
+#geom_boxplot() & stat_boxplot()
+#geom_smooth() & stat_smooth()
+#geom_bar() & stat_count()
+#geom_violin() & stat_ydensity()
+#geom_density() & stat_density()
+#geom_smooth() & stat_smooth()
+
+9.5.4
+#stat_smooth() computes a smoothed conditional mean and/or median
+#computes the predicted value of x or y
+#standard error
+
+9.5.5
+ggplot(diamonds, aes(x = cut, y = after_stat(prop), group = 1)) +
+  geom_bar()
+#while using this code with group = 1 we create proportion of chart bars correctly 
+
+ggplot(diamonds, aes(x = cut, fill = color, y = after_stat(prop), group = color)) + 
+  geom_bar()
+# group = color ensures that each color within each cut category is grouped together: calculatiing and representing proportions for each color within each cut cagegory.
