@@ -1,6 +1,5 @@
-
 library(ggplot2)
-#9.2.1
+#Exercise 9.2.1
 
 #1. What geom would you use to draw a line chart? A boxplot? A histogram? An area chart?
 #line chart: geom_line()
@@ -44,7 +43,82 @@ ggplot(mpg, aes(x = displ, y = hwy)) +
   geom_point(size = 4, color = "white") +
   geom_point(aes(colour = drv))
 
+#Exercise 9.4.1
 
+#1
+ggplot(mpg,aes(x=displ, y=hwy)) + geom_point() + facet_wrap(~cty)
+
+#If you facet a continuous variable, R will separate each value into its own facet.
+
+#2
+ggplot(mpg, aes(x=displ, y=hwy)) + 
+  geom_point() + 
+  facet_grid(drv~cyl)
+
+#The empty cells means that 
+#1) no 4-wheel drive has 5 cylinders and
+#2) no rear-wheel drive and has 4 or 5 cylinders.
+
+ggplot(mpg) + 
+  geom_point(aes(x = drv, y = cyl))
+
+#The facets that were empty have no points representing their values in the scatterplot.
+
+#3
+ggplot(mpg) + 
+  geom_point(aes(x = displ, y = hwy)) +
+  facet_grid(drv ~ .)
+
+#This code creates facet grids splitting the scatterplots of displ and hwy by drv values.
+
+ggplot(mpg) + 
+  geom_point(aes(x = displ, y = hwy)) +
+  facet_grid(.~cyl)
+
+#This code creates facet grids splitting the scatterplots of displ and hwy by cyl values.
+
+#The . rotates the grids either displaying the differences between each category across rows or columns.
+
+#4
+ggplot(mpg) + 
+  geom_point(aes(x = displ, y = hwy)) + 
+  facet_wrap(~ class, nrow = 2)
+
+#Pro: Using facets as opposed to colors allows you to visually separate the categories of a categorical variable in a "neater" way and clearly observe the relationship between x and y for one category.
+#Con: With facets, you cannot see how the observations in each category compare to all values in the data.
+#With a larger data set, you may want to use facets to see the relationship between displ and hwy more clearly. The color aesthetic may get messy and overlap points which will not allow you to see how two variables relate to one another.
+
+#5
+?facet_wrap
+
+#nrow is the function that sets the number of rows of facets.
+#ncol allows you to set the number of columns of facets.
+#The scales, shrink, labeller, and switch functions control the layout of the individual panels.
+#facet_grid does not have nrow and ncol arguments because all the facets are displayed in either the same row or same column so there is no need to specify how many rows and columns you need.
+
+#6
+ggplot(mpg, aes(x = displ)) + 
+  geom_histogram() + 
+  facet_grid(drv ~ .)
+
+ggplot(mpg, aes(x = displ)) + 
+  geom_histogram() +
+  facet_grid(. ~ drv)
+
+#The second code allows for better comparisons
+#If you are comparing histograms, it is better to facet a variable across columns. The geom you choose will determine whether faceting across rows or columns is better for comparisons.
+
+#7
+ggplot(mpg) + 
+  geom_point(aes(x = displ, y = hwy)) +
+  facet_grid(drv ~ .)
+
+ggplot(mpg) + 
+  geom_point(aes(x = displ, y = hwy)) +
+  facet_wrap(drv ~ .)
+
+#The label names and positions stay the same, but the label values change. For facet_grid, the values repeat along the y-axis since the facets are across rows.
+#For facet_wrap, the values repeat along the x-axis since the facets are across columns.
 
 9.5.1
 
@@ -58,7 +132,7 @@ diamonds |>
   ggplot(aes(x = cut, y = midpoint)) +
   geom_pointrange(aes(ymin = lower, ymax = upper))
 
-9.5.2
+#Exercise 9.5.2
 #geom_bar() calculates the heights from the data and then plots them in: representing the count of observations in each category.  geom_col() creates a bar plot where heights of the bars are representing a value associated with each category.
 
 9.5.3
