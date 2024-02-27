@@ -1,7 +1,40 @@
 library(ggplot2)
 
 #Exercise 9.2.1
+#1. Create a scatterplot of hwy vs. displ where the points are pink filled in triangles.
 
+ggplot(mpg, aes(x = hwy, y = displ)) +
++     geom_point(color = "pink", shape = "triangle")
+
+#2. Why did the following code not result in a plot with blue points?
+ggplot(mpg) + 
+  geom_point(aes(x = displ, y = hwy, color = "blue"))
+
+Answer: Because the aesthetic argument is written outside the ggplot function.
+Color should be set outside of the aesthetic mapping, the correct argument would be:
+
+ggplot(mpg, aes(x = displ, y = hwy)) +
+  geom_point(color = "blue")
+
+#3. What does the stroke aesthetic do? What shapes does it work with? (Hint: use ?geom_point)
+
+Answer: Stroke controls the size of the edge/border of the points for shapes 21-24 
+(filled circle, square, triangle, and diamond).
+
+#4. What happens if you map an aesthetic to something other than a variable name, 
+like aes(color = displ < 5)? Note, you’ll also need to specify x and y.
+
+Answer: Mapping aesthetic to somthing other than a varibale like the following:
+
+ggplot(mpg, aes(x = hwy, y = displ, color = displ < 5)) + 
+  geom_point()
+
+Creates a logical variable with values TRUE and FALSE for cars 
+with displacement values below and above 5.In general, mapping
+an aesthetic to something other than a variable first evaluates
+that expression then maps the aesthetic to the outcome.
+
+#Exercise 9.3.1
 #1. What geom would you use to draw a line chart? A boxplot? A histogram? An area chart?
 #line chart: geom_line()
 #boxplot: geom_boxplot()
