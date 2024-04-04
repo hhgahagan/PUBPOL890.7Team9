@@ -1,3 +1,50 @@
+#10.4.1
+#1 in the histogram the command excludes the missing values and at the end it adds the # of removed missing datapoints. This means that missing values do not contribute to the histogram's bin counts or its graphical representation. On the other hand, in the bar chart, they are presented separate category. The difference is the histogram excludes the missing values, since it needs numerical values to include in the bins and the bar-chart makes a separate category.  
+#2 this function decides on how the missing values are handled during the calculations. It ignores all the missing values prior to the calculation of mean nad sum.
+#3 
+nycflights13::flights |> 
+  mutate(
+    cancelled = is.na(dep_time),
+    sched_hour = sched_dep_time %/% 100,
+    sched_min = sched_dep_time %% 100,
+    sched_dep_time = sched_hour + (sched_min / 60)
+  ) %>%
+  ggplot(aes(x = sched_dep_time)) +
+  geom_freqpoly(aes(color = cancelled), binwidth = 1/4) +
+  facet_wrap(~cancelled, scales = "free_y") +
+  labs(
+    title = "Frequency of Scheduled Departure Times",
+    x = "Scheduled Departure Time (Hours)",
+    y = "Number of Flights"
+  ) +
+  scale_color_manual(values = c("TRUE" = "red", "FALSE" = "blue"),
+                     labels = c("TRUE" = "Cancelled", "FALSE" = "Not Cancelled")) +
+  theme_minimal()
+
+#11.2.1
+#1 ggplot(mpg, aes(x = displ, y = hwy, color = drv)) +
+  geom_boxplot() +
+  theme_minimal() +
+  labs(
+    title = "Engine Displacement vs. Highway Mileage",
+    subtitle = "Comparing different drive types",
+    caption = "Data source: mpg dataset from ggplot2",
+    x = "Engine Displacement (liters)",
+    y = "Highway Miles per Gallon",
+    color = "Drive Type"
+  ) +
+  scale_color_manual(
+    values = c("f" = "blue", "r" = "green", "4" = "red"),
+    labels = c("f" = "Front-wheel Drive", "r" = "Rear-wheel Drive", "4" = "Four-wheel Drive")
+  )
+
+
+
+
+
+
+
+
 #11.3.1
 #1.
 label <- tribble(
