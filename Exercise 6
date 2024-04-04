@@ -1,6 +1,6 @@
 #10.4.1
-#1 in the histogram the command excludes the missing values and at the end it adds the # of removed missing datapoints. This means that missing values do not contribute to the histogram's bin counts or its graphical representation. On the other hand, in the bar chart, they are presented separate category. The difference is the histogram excludes the missing values, since it needs numerical values to include in the bins and the bar-chart makes a separate category.  
-#2 this function decides on how the missing values are handled during the calculations. It ignores all the missing values prior to the calculation of mean nad sum.
+#1 In the histogram the command excludes the missing values and at the end it adds the # of removed missing data points. This means that missing values do not contribute to the histogram's bin counts or its graphical representation. On the other hand, in the bar chart, they are presented separate category. The difference is the histogram excludes the missing values, since it needs numerical values to include in the bins and the bar-chart makes a separate category.  
+#2 This function decides how the missing values are handled during the calculations. It ignores all the missing values before the calculation of mean and sum.
 #3 
 nycflights13::flights |> 
   mutate(
@@ -36,7 +36,20 @@ nycflights13::flights |>
     y = "Highway Miles per Gallon"
   ) +
   theme_minimal()
-#2
+#2 ggplot(mpg, aes(x = cty, y = hwy, color = drv, shape = drv)) +
+  geom_point() +
+  scale_color_manual(values = c("4" = "red", "f" = "green", "r" = "blue")) +
+  scale_shape_manual(values = c("4" = 16, "f" = 17, "r" = 15)) +
+  theme_minimal() +
+  labs(
+    title = "Highway vs. City Fuel Efficiency",
+    subtitle = "Colored and Shaped by Type of Drive Train",
+    x = "City MPG",
+    y = "Highway MPG",
+    color = "Type of Drive Train",
+    shape = "Type of Drive Train"
+  ) +
+  theme(legend.position = "right")
 
 
 
