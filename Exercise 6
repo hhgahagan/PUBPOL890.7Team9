@@ -22,22 +22,21 @@ nycflights13::flights |>
   theme_minimal()
 
 #11.2.1
-#1 ggplot(mpg, aes(x = displ, y = hwy, color = drv)) +
+#1 ggplot(data = mpg, mapping = aes(x = fct_reorder(class, hwy), y = hwy, fill = class)) +
   geom_boxplot() +
-  theme_minimal() +
+  coord_flip() +
+  scale_fill_manual(values = c("compact" = "#1b9e77", "midsize" = "#d95f02", "suv" = "#7570b3", 
+                               "2seater" = "#e7298a", "minivan" = "#66a61e", "pickup" = "#e6ab02", 
+                               "subcompact" = "#a6761d")) + # Adjust these colors and classes as needed
   labs(
     title = "Engine Displacement vs. Highway Mileage",
-    subtitle = "Comparing different drive types",
-    caption = "Data source: mpg dataset from ggplot2",
-    x = "Engine Displacement (liters)",
-    y = "Highway Miles per Gallon",
-    color = "Drive Type"
+    subtitle = "Comparing the median highway mpg in each class",
+    caption = "Data from fueleconomy.gov",
+    x = "Car Class",
+    y = "Highway Miles per Gallon"
   ) +
-  scale_color_manual(
-    values = c("f" = "blue", "r" = "green", "4" = "red"),
-    labels = c("f" = "Front-wheel Drive", "r" = "Rear-wheel Drive", "4" = "Four-wheel Drive")
-  )
-
+  theme_minimal()
+#2
 
 
 
