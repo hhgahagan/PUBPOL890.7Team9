@@ -21,6 +21,7 @@ nycflights13::flights |>
                      labels = c("TRUE" = "Cancelled", "FALSE" = "Not Cancelled")) +
   theme_minimal()
 
+
 #11.2.1
 #1 ggplot(data = mpg, mapping = aes(x = fct_reorder(class, hwy), y = hwy, fill = class)) +
   geom_boxplot() +
@@ -50,10 +51,20 @@ nycflights13::flights |>
     shape = "Type of Drive Train"
   ) +
   theme(legend.position = "right")
-
-
-
-
+#3 ggplot(
+  data = penguins,
+  mapping = aes(x = flipper_length_mm, y = body_mass_g, color = species)
+) +
+  geom_point() +
+  labs(
+    title = "Comparative Analysis of Body Mass and Flipper Length Across Penguin Species",
+    subtitle = "Scatter Plot Showing Correlation Between Body Mass and Flipper Length",
+    caption = "Data collected from the Palmer Archipelago, Antarctica. Each point represents an individual penguin measurement.",
+    x = "Flipper Length (mm)",
+    y = "Body Mass (g)",
+    color = "Species"
+  ) +
+  theme_minimal()
 
 
 
