@@ -1,4 +1,68 @@
+#10.3.3
+
+#1
+
+library(tidyverse)
+View(diamonds)
+
+ggplot(diamonds, aes(x=x)) + geom_histogram(binwidth = 0.5)
+ggplot(diamonds, aes(x=x)) + geom_histogram(binwidth = 0.5) + coord_cartesian(xlim = c(3.5,10))
+#For variable x, the values range from over 3.5 to almost 10
+#This might represent a diamond's width.
+
+ggplot(diamonds, aes(x=y)) + geom_histogram(binwidth = 0.5)
+ggplot(diamonds, aes(x=y)) + geom_histogram(binwidth = 0.5) + coord_cartesian(xlim = c(3,10))
+#For variable y, the values also range from over 3.5 to 10
+#This might represent a diamond's depth.
+
+ggplot(diamonds, aes(x=z)) + geom_histogram(binwidth = 0.5)
+ggplot(diamonds, aes(x=z)) + geom_histogram(binwidth = 0.5) + coord_cartesian(xlim = c(0,7.5))
+#For variable z, there are more observations with values of 0, but these values range from just under 2.5 to just above 6.
+#This might represent a diamond's length.
+
+#2
+
+ggplot(diamonds, aes(x=price)) + geom_histogram(binwidth = 100)
+ggplot(diamonds, aes(x=price)) + geom_histogram(binwidth = 1000)
+ggplot(diamonds, aes(x=price)) + geom_histogram(binwidth = 5000)
+#The distribution of price is right-skewed. Most of the observations are clustered in the $0 to $5000 range. 
+#The price range with the most values is $1000 to $2000. Some of the highest values lie in the $15000 to $20000 range, which skews the data to the right.
+
+#3
+
+smalldiamonds <- diamonds |>
+  filter(carat==0.99)
+#About 23 diamonds are 0.99 carat.
+
+onecarat <- diamonds |>
+  filter(carat==1)
+#About 1558 diamonds are 1 carat.
+#There are more 1 carat diamonds because diamonds are more likely to be sold as whole carat rather than as partial carat.
+
+#4
+
+ggplot(diamonds, aes(x=price)) +
+  geom_histogram() +
+  coord_cartesian(ylim = c(0,50))
+#Using this argument only shows data that has up to 50 observations within a range.
+#You cannot tell if a value range has more than 50 observations.
+#The binwidths are set automatically.
+#Without setting the binwidth, the histogram for prices looks like two blocks and you can't tell when a range starts or ends.
+
+ggplot(diamonds, aes(x=price)) +
+  geom_histogram() +
+  coord_cartesian(xlim = c(0,10000))
+#Using this argument only shows a certain value range of the x-axis variable. No observations beyond this range are observed.
+#The binwidths are set automatically and it is easier to distinguish the range of values and how many observations fall within each range.
+
+ggplot(diamonds, aes(x=price)) +
+  geom_histogram() +
+  coord_cartesian(ylim = c(0,1000))
+#If you try to zoom so only half a bar shows, the bars combine and it is hard to distinguish between them.
+
+
 #10.4.1
+
 #1 In the histogram the command excludes the missing values and at the end it adds the # of removed missing data points. This means that missing values do not contribute to the histogram's bin counts or its graphical representation. On the other hand, in the bar chart, they are presented separate category. The difference is the histogram excludes the missing values, since it needs numerical values to include in the bins and the bar-chart makes a separate category.  
 #2 This function decides how the missing values are handled during the calculations. It ignores all the missing values before the calculation of mean and sum.
 #3 
@@ -23,7 +87,9 @@ nycflights13::flights |>
 
 
 #11.2.1
-#1 ggplot(data = mpg, mapping = aes(x = fct_reorder(class, hwy), y = hwy, fill = class)) +
+
+#1 
+ggplot(data = mpg, mapping = aes(x = fct_reorder(class, hwy), y = hwy, fill = class)) +
   geom_boxplot() +
   coord_flip() +
   scale_fill_manual(values = c("compact" = "#1b9e77", "midsize" = "#d95f02", "suv" = "#7570b3", 
@@ -37,7 +103,9 @@ nycflights13::flights |>
     y = "Highway Miles per Gallon"
   ) +
   theme_minimal()
-#2 ggplot(mpg, aes(x = cty, y = hwy, color = drv, shape = drv)) +
+
+#2 
+ggplot(mpg, aes(x = cty, y = hwy, color = drv, shape = drv)) +
   geom_point() +
   scale_color_manual(values = c("4" = "red", "f" = "green", "r" = "blue")) +
   scale_shape_manual(values = c("4" = 16, "f" = 17, "r" = 15)) +
@@ -51,7 +119,8 @@ nycflights13::flights |>
     shape = "Type of Drive Train"
   ) +
   theme(legend.position = "right")
-#3 ggplot(
+#3 
+ggplot(
   data = penguins,
   mapping = aes(x = flipper_length_mm, y = body_mass_g, color = species)
 ) +
@@ -67,8 +136,8 @@ nycflights13::flights |>
   theme_minimal()
 
 
-
 #11.3.1
+
 #1.
 label <- tribble(
   ~displ, ~hwy, ~label, ~vjust, ~hjust,
@@ -89,13 +158,16 @@ ggplot(mpg, aes(displ, hwy)) +
     x = Inf, y = Inf,
     label = "There is a potential correlation between engine size and decreasing fuel economy.", vjust = "top", hjust = "right", color = "blue", size = 5
   )
+
 #3. If the facet variable is not specified, then the text is just drawn in all facets. 
 #To draw the label in only one facet, you need to add a column to the label data frame with the value of the variable(s) facetting.
 #To put a different label in each facet, you would need to include a variable in your dataset that corresponds to the labels you want to display. Then, you can use that variable in the aes() function within geom_text(). 
+
 #4.
 #label.padding is the padding around label
 #label.r is the amount of rounding in the corners
 #label.size is the size of label border
+
 #5. 
 #The four arguments are (from the help for arrow()):
 #angle decides the angle of arrow head
