@@ -1,1 +1,28 @@
+install.packages("usmap")
+install.packages("ggplot2")
+install.packages("dplyr")
 
+library(usmap)
+library(ggplot2)
+library(dplyr)
+
+# Read the CSV file
+data <- read.csv("/Users/hannahgahagan/Library/CloudStorage/OneDrive-DukeUniversity/Duke/Spring 2024/R in Public Policy/R Class Data (1).csv")
+
+# Make dropout rate
+data$dropout_rate <- (data$SE_A12003_002 / data$SE_A12003_001 * 100)
+
+# Make dropout data
+dropout_data <- data.frame(state = data$Geo_NAME, dropout_rate = data$dropout_rate)
+
+
+# Plot the US map with dropout rates using ggplot
+g<- plot_usmap(data = dropout_data, values = "dropout_rate") +
+  scale_fill_viridis_c(name = "dropout_rate", 
+                       limits = c(2,7)) +
+  labs(title = "Dropout Rate by State") +
+  theme(panel.background = element_rect(colour = "black"))
+#add labels
+h <- g + geom_sf_label(aes(label = round(dropout_rate, 1), hjust = ifelse(state %in% c("Rhode Island"), .1, 0.5), vjust = ifelse(state %in% c("Massachusetts", "Connecticut", "Rhode Island"), 0.5, 0.5)), size = 2)  # Adjust size here
+
+print(h)
