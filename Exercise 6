@@ -174,3 +174,133 @@ ggplot(mpg, aes(displ, hwy)) +
 #length is for the length of the arrow head
 #ends ends the line and then draw arrow head
 #type: "open" or "close" commands whether the arrow head is a closed or open triangle
+
+#11.4.6
+
+#1
+In the code provided, the geom_hex() function creates a hexbin plot. However, the scale_color_gradient() function adjusts 
+the color scale of a continuous color aesthetic.
+
+In the present case, the geom_hex() function uses the fill aesthetic to represent the density of points in each hexagonal bin,
+but we’re trying to adjust the color scale using scale_color_gradient(). 
+So, to adjust the color scale of the hex-bin plot, we should use the scale_fill_gradient() function. Here is the corrected code
+
+df <- tibble(   
+  x = rnorm(10000),   
+  y = rnorm(10000) 
+  )  
+
+ggplot(df, aes(x, y)) +   
+  geom_hex() +   
+  scale_fill_gradient(low = "white", 
+                      high = "red") +   
+  coord_fixed()
+
+#2
+The first argument to every scale function is name . It is used as the axis or legend title.
+The labs() can also be used to name a legend, with the aesthetic name defining the new name. For example, labs(x = NULL). 
+The output will be the same.
+
+We use scale_ functions to customize how a specific aesthetic is represented in the plot. 
+It allows us to modify the scale, transformation, and appearance of the aesthetic. 
+On the other hand, labs()is specifically designed for modifying the text labels and titles of different plot components.
+It’s not concerned with how an aesthetic is represented or scaled in the plot.
+
+#3
+
+data("presidential")
+
+# Creating a vector of years where a new president takes office
+# to allow plotting it on the x-axis
+x_labs = 
+  presidential |>
+  select(start) |>
+  as_vector() |>
+  as_date()
+
+y_labs = seq(
+  from = 1 + 33,
+  to = nrow(presidential) + 33,
+  by = 1
+)
+
+g = 
+presidential |>
+  as_tibble() |>
+  mutate(id = 33 + row_number()) |>
+  ggplot(aes(x = start, xend = end, 
+             y = id, yend = id, 
+             col = party,
+             label = name)) +
+  geom_segment(lwd = 10) +
+  
+  # (a) Combining the two variants that customize colors and x axis breaks.
+  scale_color_manual(values = c("Democratic" = "blue",
+                                "Republican" = "red")) +
+  scale_x_continuous(breaks = x_labs,
+                     labels = year(x_labs)) +
+  
+  
+  # (b) Improving the display of the y axis.
+    scale_y_reverse(breaks = y_labs,
+                  labels = y_labs) +
+  
+  
+  # (c) Labeling each term with the name of the president.
+  geom_text(hjust = -0.05,
+            vjust = -1.5) +
+  
+  geom_rect(aes(xmin = start,
+                xmax = end,
+                ymin = 33.5,
+                ymax = 45.5,
+                fill = party),
+            alpha = 0.3,
+            col = NA) +
+  scale_fill_manual(values = c("Democratic" = "blue",
+                                "Republican" = "red")) +
+  
+  
+  # (d) Adding informative plot labels.
+  labs(color = "President's Political Party",
+       y = "Table of Precedence Number", 
+       x = "Year") +
+  theme_minimal() +
+  theme(legend.position = "bottom") +
+  theme(panel.grid.major.x = element_line(color = "darkgrey"),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        axis.text.y = element_text()) +
+  guides(fill = "none")
+
+print(g) 
+
+# (e) Placing breaks every 4 years 
+
+x_4yr_labs = 
+  presidential |>
+  select(start) |>
+  as_vector() |>
+  as_date()
+  
+x_4yr_labs = seq(from = ymd(x_4yr_labs[1]),
+                 to = ymd(x_4yr_labs[length(x_4yr_labs)]),
+                 by = "4 years")
+
+g + 
+  scale_x_continuous(breaks = x_4yr_labs,
+                     labels = year(x_4yr_labs))
+
+
+#4
+
+ggplot(diamonds, aes(x = carat, y = price)) +   
+  geom_point(aes(color = cut), alpha = 1/20) +
+  theme_light() +
+  guides(color = guide_legend(override.aes = list(size = 5,
+                                                  alpha = 0.5)))
+
+
+
+
