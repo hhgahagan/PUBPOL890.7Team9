@@ -32,7 +32,7 @@ print(h)
 data <- data |>  
   rename(state=Geo_NAME)
 
-dropout <- dropout |>  
+data <- data |>  
   rename(MHI=SE_A14007_001,
          whiteMHI=SE_A14007_002,
          blackMHI=SE_A14007_003,
