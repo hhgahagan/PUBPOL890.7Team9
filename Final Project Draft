@@ -1,10 +1,12 @@
 install.packages("usmap")
 install.packages("ggplot2")
 install.packages("dplyr")
+install.packages ("tidyverse")
 
 library(usmap)
 library(ggplot2)
 library(dplyr)
+library(tidyverse)
 
 # Read the CSV file
 data <- read.csv("/Users/hannahgahagan/Library/CloudStorage/OneDrive-DukeUniversity/Duke/Spring 2024/R in Public Policy/R Class Data (1).csv")
@@ -14,7 +16,6 @@ data$dropout_rate <- (data$SE_A12003_002 / data$SE_A12003_001 * 100)
 
 # Make dropout data
 dropout_data <- data.frame(state = data$Geo_NAME, dropout_rate = data$dropout_rate)
-
 
 # Plot the US map with dropout rates using ggplot
 g<- plot_usmap(data = dropout_data, values = "dropout_rate") +
@@ -26,3 +27,39 @@ g<- plot_usmap(data = dropout_data, values = "dropout_rate") +
 h <- g + geom_sf_label(aes(label = round(dropout_rate, 1), hjust = ifelse(state %in% c("Rhode Island"), .1, 0.5), vjust = ifelse(state %in% c("Massachusetts", "Connecticut", "Rhode Island"), 0.5, 0.5)), size = 2)  # Adjust size here
 
 print(h)
+
+#Renaming variables
+data <- data |>  
+  rename(state=Geo_NAME)
+
+dropout <- dropout |>  
+  rename(MHI=SE_A14007_001,
+         whiteMHI=SE_A14007_002,
+         blackMHI=SE_A14007_003,
+         amindianMHI=SE_A14007_004,
+         asianMHI=SE_A14007_005,
+         nahawaiianMHI=SE_A14007_006,
+         otherMHI=SE_A14007_007,
+         twomoreMHI=SE_A14007_008,
+         hispMHI=SE_A14007_009,
+         whitealoneMHI=SE_A14007_010)
+
+#Column Chart of Dropout Rates in Each State
+ggplot(data, aes(x=state, y=dropout_rate, fill=state)) + 
+  geom_col() +
+  labs(title = "Dropout Rate by State", x = "State", y = "Dropout Rate (%)") +
+  scale_x_discrete(guide = guide_axis(n.dodge = 2))
+
+#Column Chart of Median Household Income in Each State
+ggplot(data, aes(x=state, y=MHI, fill=state)) + 
+  geom_col() +
+  labs(title = "Median Household Income by State", x = "State", y = "Median Household Income ($)") +
+  scale_x_discrete(guide = guide_axis(n.dodge = 2)) +
+  scale_y_continuous(labels=scales::comma)
+       
+#Scatterplot of Median Household Income and Drop Out Rates
+ggplot(data,aes(x=MHI, y=dropout_rate)) + 
+  geom_point(aes(color=state), size=4) + 
+  geom_smooth(se=FALSE, color="gray") +
+  labs(title = "Median Household Income and Dropout Rates by State", x = "Median Household Income ($)", y = "Dropout Rate (%)", color = "State") +
+  scale_x_continuous(labels=scales::comma)
